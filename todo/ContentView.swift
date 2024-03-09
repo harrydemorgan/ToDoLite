@@ -8,14 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var text: String = ""
+    @State private var enteredTexts: [String] = []
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            List(enteredTexts, id: \.self) { enteredText in
+                Text(enteredText)
+            }
+            
+            Spacer()
+            
+            TextField("Enter task...", text: $text, onCommit: {
+                // Append the entered text to the list and clear the text field
+                if !text.isEmpty {
+                    enteredTexts.append(text)
+                    text = ""
+                }
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding()
         }
-        .padding()
+        
+        
     }
 }
 
